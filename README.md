@@ -22,7 +22,7 @@ lister.ls('/my-folder/subfolder/', function (error, data) {
 
 The `s3ls` accepts two options:
 * `bucket` - Obligatory. The S3 bucket name
-* `s3` - Optional. The `aws-sdk` S3 class instance. For example: `new AWS.S3({apiVersion: '2006-03-01')` 
+* `s3` - Optional. The `aws-sdk` S3 class instance. For example: `new AWS.S3({apiVersion: '2006-03-01'})` 
 
 The `s3ls.ls(path, callback)` function takes:
 * `path` - any string. E.g. 
