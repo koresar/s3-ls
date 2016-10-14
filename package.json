@@ -1,6 +1,6 @@
 {
   "name": "s3-ls",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "List contents of an S3 bucket 'folder'",
   "main": "index.js",
   "bin": {
