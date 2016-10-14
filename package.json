@@ -1,0 +1,38 @@
+{
+  "name": "s3-ls",
+  "version": "0.0.1",
+  "description": "List contents of an S3 bucket 'folder'",
+  "main": "index.js",
+  "bin": {
+    "s3-ls": "./bin/s3-ls"
+  },
+  "scripts": {
+    "test": "tape test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koresar/s3-ls.git"
+  },
+  "keywords": [
+    "aws",
+    "s3",
+    "list",
+    "listobjects",
+    "folder",
+    "file"
+  ],
+  "author": "koresar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/koresar/s3-ls/issues"
+  },
+  "homepage": "https://github.com/koresar/s3-ls",
+  "devDependencies": {
+    "proxyquire": "^1.7.10",
+    "tape": "^4.6.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.6.9",
+    "lodash": "^4.16.4"
+  }
+}
