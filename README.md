@@ -12,7 +12,7 @@ var s3ls = require('s3-ls');
 
 var lister = s3ls({bucket: 'my-bucket-name'});
 
-lister.ls('/my-folder/subfolder/', function (data) {
+lister.ls('/my-folder/subfolder/', function (error, data) {
   console.log(data.files); // ['my-folder/subfolder/file1','my-folder/subfolder/file2']
   console.log(data.folders); // ['my-folder/subfolder/subsub1/','my-folder/subfolder/subsub2/']
 });
