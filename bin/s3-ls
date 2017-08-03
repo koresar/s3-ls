@@ -10,12 +10,12 @@ if (!bucket) {
 }
 
 var s3ls = require('..');
-s3ls({bucket: bucket}).ls(path, function (error, data) {
-  if (error) {
-    console.error(error.message);
-    process.exit(1);
-  }
-
+s3ls({bucket: bucket}).ls(path)
+.then(function (data) {
   data.folders.forEach(function (folder) { console.log(folder) });
   data.files.forEach(function (files) { console.log(files) });
+})
+.catch(function (error) {
+  console.error(error.message);
+  process.exit(1);
 });

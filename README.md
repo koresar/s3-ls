@@ -1,5 +1,5 @@
 # s3-ls [![Build Status](https://travis-ci.org/koresar/s3-ls.svg?branch=master)](https://travis-ci.org/koresar/s3-ls)
-List contents of an S3 bucket 'folder' 
+List contents of an S3 bucket 'folder'. Node.js module and command line executable.
 
 # Install
 ```sh
@@ -12,10 +12,12 @@ var s3ls = require('s3-ls');
 
 var lister = s3ls({bucket: 'my-bucket-name'});
 
-lister.ls('/my-folder/subfolder/', function (error, data) {
+lister.ls('/my-folder/subfolder/')
+.then((data) => {
   console.log(data.files); // ['my-folder/subfolder/file1','my-folder/subfolder/file2']
   console.log(data.folders); // ['my-folder/subfolder/subsub1/','my-folder/subfolder/subsub2/']
-});
+})
+.catch((error) => console.error);
 ```
 
 # API
@@ -52,3 +54,13 @@ new folder/
 funny-cat-gifs-001.gif
 $ 
 ```
+
+# CHANGELOG
+
+## v1.0
+* Node callbacks interface. No Promises. See README [here](https://github.com/koresar/s3-ls/tree/v1.0.1).
+* The optional `aws-sdk` dependency version was `>=2.0.0 <3.0.0`.
+
+## v2.0
+* Only promises are supported now. For node callbacks use `s3ls.ls(path).then(cb, cb)`
+* The optional `aws-sdk` dependency version is `>=2.3.0 <3.0.0` now.

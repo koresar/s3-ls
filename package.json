@@ -28,11 +28,12 @@
   },
   "homepage": "https://github.com/koresar/s3-ls",
   "devDependencies": {
+    "bluebird": "^3.5.0",
     "proxyquire": "^1.7.10",
     "tape": "^4.6.2"
   },
   "dependencies": {
-    "aws-sdk": "^2.6.9",
+    "aws-sdk": ">=2.3.0 <3.0.0",
     "lodash": "^4.16.4"
   }
 }
