@@ -17,7 +17,7 @@ lister.ls('/my-folder/subfolder/')
   console.log(data.files); // ['my-folder/subfolder/file1','my-folder/subfolder/file2']
   console.log(data.folders); // ['my-folder/subfolder/subsub1/','my-folder/subfolder/subsub2/']
 })
-.catch((error) => console.error);
+.catch(console.error);
 ```
 
 # API
@@ -62,5 +62,5 @@ $
 * The optional `aws-sdk` dependency version was `>=2.0.0 <3.0.0`.
 
 ## v2.0
-* Only promises are supported now. For node callbacks use `s3ls.ls(path).then(cb, cb)`
+* Only promises are supported now. For node callbacks use `s3ls.ls(path).then(r => cb(null, r), cb)`
 * The optional `aws-sdk` dependency version is `>=2.3.0 <3.0.0` now.
