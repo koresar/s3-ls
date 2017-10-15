@@ -26,12 +26,11 @@ The `s3ls` accepts two options:
 * `bucket` - Obligatory. The S3 bucket name
 * `s3` - Optional. The `aws-sdk` S3 class instance. For example: `new AWS.S3({apiVersion: '2006-03-01'})` 
 
-The `s3ls.ls(path, callback)` function takes:
+The `s3ls.ls(path)` function takes:
 * `path` - any string. E.g. 
   *  `"/"`, `""`, or
   * `"/folder"`, `"folder/"`, `"folder"`, or
   * `"/1/2/3/4"`, `"1/2/3/4/"`, `"1/2/3/4"`, etc.
-* `callback` - node-style callback which resolves to `{files: String[], folders: String[]}` object.
 
 # CLI
 
