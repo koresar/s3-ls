@@ -1,6 +1,6 @@
 {
   "name": "s3-ls",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "List contents of an S3 bucket 'folder'",
   "main": "index.js",
   "bin": {
@@ -13,7 +13,14 @@
     "type": "git",
     "url": "git+https://github.com/koresar/s3-ls.git"
   },
-  "keywords": ["aws", "s3", "list", "listobjects", "folder", "file"],
+  "keywords": [
+    "aws",
+    "s3",
+    "list",
+    "listobjects",
+    "folder",
+    "file"
+  ],
   "author": "koresar",
   "license": "MIT",
   "bugs": {
