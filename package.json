@@ -13,14 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/koresar/s3-ls.git"
   },
-  "keywords": [
-    "aws",
-    "s3",
-    "list",
-    "listobjects",
-    "folder",
-    "file"
-  ],
+  "keywords": ["aws", "s3", "list", "listobjects", "folder", "file"],
   "author": "koresar",
   "license": "MIT",
   "bugs": {
@@ -34,6 +27,8 @@
   },
   "dependencies": {
     "aws-sdk": ">=2.3.0 <3.0.0",
-    "lodash": "^4.16.4"
+    "lodash.map": "^4.6.0",
+    "lodash.trimend": "^4.5.1",
+    "lodash.trimstart": "^4.5.1"
   }
 }
