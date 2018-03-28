@@ -8,16 +8,13 @@ npm i -S s3-ls
 
 # Usage
 ```js
-var s3ls = require('s3-ls');
+const s3ls = require('s3-ls');
 
-var lister = s3ls({bucket: 'my-bucket-name'});
+const lister = s3ls({bucket: 'my-bucket-name'});
 
-lister.ls('/my-folder/subfolder/')
-.then((data) => {
-  console.log(data.files); // ['my-folder/subfolder/file1','my-folder/subfolder/file2']
-  console.log(data.folders); // ['my-folder/subfolder/subsub1/','my-folder/subfolder/subsub2/']
-})
-.catch(console.error);
+const {files, folders} = await lister.ls('/my-folder/subfolder/');
+console.log(files);   // ['my-folder/subfolder/file1','my-folder/subfolder/file2']
+console.log(folders); // ['my-folder/subfolder/subsub1/','my-folder/subfolder/subsub2/']
 ```
 
 # API
