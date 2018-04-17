@@ -18,8 +18,8 @@ test('should use aws-sdk if no s3 object instance provided', function (t) {
 
 test('should throw if bucket name was not provided', function (t) {
   t.throws(s3ls);
-  t.throws(s3ls.bind({}));
-  t.throws(s3ls.bind({bucket: 123}));
+  t.throws(s3ls.bind(null, {}));
+  t.throws(s3ls.bind(null, {bucket: 123}));
   t.end();
 });
 
