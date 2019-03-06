@@ -79,4 +79,5 @@ $
 
 ## v3.0
 
-- Drop node.js 0.10, 4, 5 support. Add node.js 9,10 support.
+- Drop node.js 0.10, 4, 5 support. Add node.js 9, 10 support. Remove lodash dependencies.
+- No any other changes. Same API as always.
