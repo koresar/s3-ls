@@ -1,21 +1,22 @@
 #!/usr/bin/env node
 
-var args = process.argv.slice(2);
-var bucket = args[0];
-var path = args[1] || '';
+const args = process.argv.slice(2);
+const bucket = args[0];
+const path = args[1] || "";
 
 if (!bucket) {
-  console.error('Error! Wrong arguments. Usage: s3-ls bucket-name [path]');
+  console.error("Error! Wrong arguments. Usage: s3-ls bucket-name [path]");
   process.exit(1);
 }
 
-var s3ls = require('..');
-s3ls({bucket: bucket}).ls(path)
-.then(function (data) {
-  data.folders.forEach(function (folder) { console.log(folder) });
-  data.files.forEach(function (files) { console.log(files) });
-})
-.catch(function (error) {
-  console.error(error.message);
-  process.exit(1);
-});
+const s3ls = require("..");
+s3ls({ bucket: bucket })
+  .ls(path)
+  .then(data => {
+    data.folders.forEach(folder => console.log(folder));
+    data.files.forEach(files => console.log(files));
+  })
+  .catch(error => {
+    console.error(error.message);
+    process.exit(1);
+  });

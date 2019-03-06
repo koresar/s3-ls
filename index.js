@@ -1,24 +1,28 @@
-var lodashMap = require("lodash.map")
-var lodashTrimStart = require("lodash.trimstart")
-var lodashTrimEnd = require("lodash.trimend")
-var assert = require("assert")
+const trimStart = (s, ch) => (s[0] === ch ? trimStart(s.substr(1), ch) : s);
+const trimEnd = (s, ch) =>
+  s[s.length - 1] === ch ? trimEnd(s.substr(0, s.length - 1), ch) : s;
 
-module.exports = function(options) {
-  assert(options && typeof options.bucket === "string")
-  var bucket = options.bucket
-  var s3 =
-    options.s3 || new (require("aws-sdk")).S3({ apiVersion: "2006-03-01" })
+module.exports = function S3LS(options) {
+  if (!options || typeof options.bucket !== "string") {
+    throw new Error("Bad 'bucket'");
+  }
+
+  const bucket = options.bucket;
+  const s3 =
+    options.s3 || new (require("aws-sdk")).S3({ apiVersion: "2006-03-01" });
 
   return {
-    ls: function ls(path) {
-      var prefix = lodashTrimStart(lodashTrimEnd(path, "/") + "/", "/")
-      var result = { files: [], folders: [] }
+    ls(path) {
+      const prefix = trimStart(trimEnd(path, "/") + "/", "/");
+      const result = { files: [], folders: [] };
 
       function s3ListCheckTruncated(data) {
-        result.files = result.files.concat(lodashMap(data.Contents, "Key"))
+        result.files = result.files.concat(
+          (data.Contents || []).map(i => i.Key)
+        );
         result.folders = result.folders.concat(
-          lodashMap(data.CommonPrefixes, "Prefix")
-        )
+          (data.CommonPrefixes || []).map(i => i.Prefix)
+        );
 
         if (data.IsTruncated) {
           return s3
@@ -30,10 +34,10 @@ module.exports = function(options) {
               ContinuationToken: data.NextContinuationToken
             })
             .promise()
-            .then(s3ListCheckTruncated)
+            .then(s3ListCheckTruncated);
         }
 
-        return result
+        return result;
       }
 
       return s3
@@ -45,7 +49,7 @@ module.exports = function(options) {
           StartAfter: prefix // removes the folder name from listing
         })
         .promise()
-        .then(s3ListCheckTruncated)
+        .then(s3ListCheckTruncated);
     }
-  }
-}
+  };
+};

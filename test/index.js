@@ -1,41 +1,40 @@
-var test = require('tape');
-var Promise = require('bluebird');
-var s3ls = require('..');
+const test = require("tape");
+const s3ls = require("..");
 
-test('should use aws-sdk if no s3 object instance provided', function (t) {
-  var proxyquire = require('proxyquire');
-  var s3ls = proxyquire('..', {
-    'aws-sdk': {
+test("should use aws-sdk if no s3 object instance provided", t => {
+  const proxyquire = require("proxyquire");
+  const s3ls = proxyquire("..", {
+    "aws-sdk": {
       S3: function S3(options) {
-        t.equal(options.apiVersion, '2006-03-01');
+        t.equal(options.apiVersion, "2006-03-01");
         t.end();
       }
     }
   });
 
-  s3ls({bucket: '1'})
+  s3ls({ bucket: "1" });
 });
 
-test('should throw if bucket name was not provided', function (t) {
+test("should throw if bucket name was not provided", t => {
   t.throws(s3ls);
   t.throws(s3ls.bind(null, {}));
-  t.throws(s3ls.bind(null, {bucket: 123}));
+  t.throws(s3ls.bind(null, { bucket: 123 }));
   t.end();
 });
 
-test('should pass proper argument to the aws-sdk', function (t) {
+test("should pass proper argument to the aws-sdk", t => {
   t.plan(5);
   s3ls({
-    bucket: 'b',
+    bucket: "b",
     s3: {
-      listObjectsV2: function listObjectsV2(options) {
-        t.equal(options.Bucket, 'b');
+      listObjectsV2(options) {
+        t.equal(options.Bucket, "b");
         t.equal(options.MaxKeys, 2147483647);
-        t.equal(options.Delimiter, '/');
-        t.equal(options.Prefix, '');
-        t.equal(options.StartAfter, '');
+        t.equal(options.Delimiter, "/");
+        t.equal(options.Prefix, "");
+        t.equal(options.StartAfter, "");
         return {
-          promise: function () {
+          promise() {
             return Promise.resolve({
               Contents: [],
               CommonPrefixes: [],
@@ -46,26 +45,26 @@ test('should pass proper argument to the aws-sdk', function (t) {
       }
     }
   })
-  .ls('/')
-  .catch(t.end);
+    .ls("/")
+    .catch(t.end);
 });
 
-test('should pass proper argument to the aws-sdk for long folders', function (t) {
+test("should pass proper argument to the aws-sdk for long folders", t => {
   t.plan(10);
-  var counter = 0;
+  let counter = 0;
   s3ls({
-    bucket: 'b',
+    bucket: "b",
     s3: {
-      listObjectsV2: function listObjectsV2(options) {
+      listObjectsV2(options) {
         counter++;
         if (counter === 2) {
-          t.equal(options.Bucket, 'b');
+          t.equal(options.Bucket, "b");
           t.equal(options.MaxKeys, 2147483647);
-          t.equal(options.Delimiter, '/');
-          t.equal(options.Prefix, '');
-          t.equal(options.ContinuationToken, 'my continuation token');
+          t.equal(options.Delimiter, "/");
+          t.equal(options.Prefix, "");
+          t.equal(options.ContinuationToken, "my continuation token");
           return {
-            promise: function () {
+            promise() {
               return Promise.resolve({
                 Contents: [],
                 CommonPrefixes: [],
@@ -75,18 +74,18 @@ test('should pass proper argument to the aws-sdk for long folders', function (t)
           };
         }
 
-        t.equal(options.Bucket, 'b');
+        t.equal(options.Bucket, "b");
         t.equal(options.MaxKeys, 2147483647);
-        t.equal(options.Delimiter, '/');
-        t.equal(options.Prefix, '');
-        t.equal(options.StartAfter, '');
+        t.equal(options.Delimiter, "/");
+        t.equal(options.Prefix, "");
+        t.equal(options.StartAfter, "");
 
         return {
-          promise: function () {
+          promise() {
             return Promise.resolve({
               Contents: [],
-              CommonPrefixes: [{Prefix: 'folder/'}],
-              NextContinuationToken: 'my continuation token',
+              CommonPrefixes: [{ Prefix: "folder/" }],
+              NextContinuationToken: "my continuation token",
               IsTruncated: true
             });
           }
@@ -94,23 +93,23 @@ test('should pass proper argument to the aws-sdk for long folders', function (t)
       }
     }
   })
-  .ls('/')
-  .catch(t.end);
+    .ls("/")
+    .catch(t.end);
 });
 
-test('should generate proper tree object', function (t) {
+test("should generate proper tree object", t => {
   t.plan(1);
-  var counter = 0;
+  let counter = 0;
   s3ls({
-    bucket: 'b',
+    bucket: "b",
     s3: {
-      listObjectsV2: function listObjectsV2() {
+      listObjectsV2() {
         counter++;
         if (counter === 2) {
           return {
-            promise: function () {
+            promise() {
               return Promise.resolve({
-                Contents: [{Key: 'folder/file1'}, {Key: 'folder/file2'}],
+                Contents: [{ Key: "folder/file1" }, { Key: "folder/file2" }],
                 CommonPrefixes: [],
                 IsTruncated: false
               });
@@ -118,11 +117,11 @@ test('should generate proper tree object', function (t) {
           };
         }
         return {
-          promise: function promise() {
+          promise() {
             return Promise.resolve({
               Contents: [],
-              CommonPrefixes: [{Prefix: 'folder/'}],
-              NextContinuationToken: 'my continuation token',
+              CommonPrefixes: [{ Prefix: "folder/" }],
+              NextContinuationToken: "my continuation token",
               IsTruncated: true
             });
           }
@@ -130,12 +129,12 @@ test('should generate proper tree object', function (t) {
       }
     }
   })
-  .ls('/')
-  .then(function (data) {
-    t.deepEqual(data, {
-      folders: ['folder/'],
-      files: ['folder/file1', 'folder/file2']
-    });
-  })
-  .catch(t.end);
+    .ls("/")
+    .then(data => {
+      t.deepEqual(data, {
+        folders: ["folder/"],
+        files: ["folder/file1", "folder/file2"]
+      });
+    })
+    .catch(t.end);
 });
