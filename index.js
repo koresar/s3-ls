@@ -18,10 +18,10 @@ module.exports = function S3LS(options) {
 
       function s3ListCheckTruncated(data) {
         result.files = result.files.concat(
-          (data.Contents || []).map(i => i.Key)
+          (data.Contents || [])
         );
         result.folders = result.folders.concat(
-          (data.CommonPrefixes || []).map(i => i.Prefix)
+          (data.CommonPrefixes || [])
         );
 
         if (data.IsTruncated) {
