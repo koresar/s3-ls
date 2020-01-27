@@ -2,6 +2,8 @@
 
 List contents of an S3 bucket 'folder'. Node.js module and command line executable.
 
+For deep listing S3 'folder' contents see the sibling project [`s3-tree`](https://github.com/koresar/s3-tree).
+
 # Install
 
 ```bash
